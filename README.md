@@ -7,6 +7,7 @@ A reinforcement learning agent that plays Clash Royale in real time on a Windows
 ## Table of Contents
 
 - [Overview](#overview)
+- [Project Documents](#project-documents)
 - [Architecture](#architecture)
 - [Repository Structure](#repository-structure)
 - [Large Assets (Google Drive)](#large-assets-google-drive)
@@ -35,6 +36,14 @@ The system operates in two modes:
 - `debug_cv.py` — a live screen mirror with YOLO + SORT overlay for debugging the vision pipeline without the RL loop.
 
 ---
+
+## Project Documents
+
+| Document | Description |
+|----------|-------------|
+| [Report](report.pdf) | Full technical write-up |
+| [Poster](poster.pdf) | Research poster |
+| [Presentation](presentation.pdf) | Slide deck |
 
 ## Architecture
 
