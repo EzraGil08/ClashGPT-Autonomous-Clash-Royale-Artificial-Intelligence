@@ -41,9 +41,11 @@ The system operates in two modes:
 
 | Document | Description |
 |----------|-------------|
-| [Report](report.pdf) | Full technical write-up |
-| [Poster](poster.pdf) | Research poster |
-| [Presentation](presentation.pdf) | Slide deck |
+| [Report](Presentation%20Materials/Report.pdf) | Full technical write-up |
+| [Poster](Presentation%20Materials/Poster.pdf) | Research poster |
+| [Presentation](Presentation%20Materials/Presentation.pdf) | Slide deck |
+
+---
 
 ## Architecture
 
@@ -83,17 +85,23 @@ get_top_corner()          ← anchors all pixel coords to the game window
 ```
 Senior Research Project/
 │
-├── actions.py          # Action masking and PyAutoGUI execution
-├── constants.py        # Card costs, placement coords, action-space layout
-├── debug_cv.py         # Live vision debug window (no RL)
-├── env.py              # Gymnasium CREnv — wraps the full pipeline
-├── hand_detection.py   # Template-matching hand reader
-├── misc_functions.py   # get_top_corner(), get_elixir()
-├── observation.py      # build_observation() → 202-float vector
-├── reward.py           # Hybrid dense/sparse reward function
-├── tracker.py          # SORT-based multi-object tracker (CRTracker)
-├── tower_health.py     # Pixel-scan HP reader for all 6 towers
-├── train.py            # MaskablePPO training script
+├── Code/
+│   ├── actions.py          # Action masking and PyAutoGUI execution
+│   ├── constants.py        # Card costs, placement coords, action-space layout
+│   ├── debug_cv.py         # Live vision debug window (no RL)
+│   ├── env.py              # Gymnasium CREnv — wraps the full pipeline
+│   ├── hand_detection.py   # Template-matching hand reader
+│   ├── misc_functions.py   # get_top_corner(), get_elixir()
+│   ├── observation.py      # build_observation() → 202-float vector
+│   ├── reward.py           # Hybrid dense/sparse reward function
+│   ├── tracker.py          # SORT-based multi-object tracker (CRTracker)
+│   ├── tower_health.py     # Pixel-scan HP reader for all 6 towers
+│   └── train.py            # MaskablePPO training script
+│
+├── Presentation Materials/
+│   ├── Poster.pdf
+│   ├── Report.pdf
+│   └── Presentation.pdf
 │
 ├── Images/             # Reference images used by CV modules (on Drive)
 │   ├── cards_in_hand/  # 9 card template PNGs for get_hand()
@@ -160,6 +168,8 @@ pip install -r requirements.txt
 ### Training
 
 ```bash
+cd Code
+
 # Start a fresh training run
 python train.py
 
@@ -167,7 +177,7 @@ python train.py
 python train.py --resume
 
 # Resume from a specific checkpoint
-python train.py --resume --checkpoint "Models/checkpoints/cr_model_1024_steps.zip"
+python train.py --resume --checkpoint "../Models/checkpoints/cr_model_1024_steps.zip"
 ```
 
 **Calibration prompt** — at startup, the script asks you to mouse to the top-left corner of the game window (hold for 3 s), then the bottom-right corner (hold for 3 s). This sets the capture region. `get_top_corner()` then scans the captured frame for the characteristic dark-blue pixel at the game's top-left corner (BGR `[72, 30, 24]`, tolerance ±5) to anchor all subsequent coordinates.
@@ -187,6 +197,7 @@ tensorboard --logdir "C:/Users/<you>/OneDrive/Desktop/Senior Research Project/Mo
 ### Debug Vision
 
 ```bash
+cd Code
 python debug_cv.py
 ```
 
@@ -236,7 +247,7 @@ Key exports:
 
 ### `reward.py`
 - `compute_reward(...) → float` — evaluates the hybrid dense/sparse reward. See [Reward Function](#reward-function) below.
-- `reward_summary(...)  → str` — human-readable string of which reward components fired, used in the render overlay.
+- `reward_summary(...) → str` — human-readable string of which reward components fired, used in the render overlay.
 
 ### `env.py`
 - `CREnv(calibration_region, render_mode)` — the Gymnasium environment. Loads both YOLO models on init. Runs YOLO every `YOLO_SKIP_FRAMES=3` steps (every other 2 frames reuse the last tracker state to reduce inference latency). HP noise filter suppresses tower deltas < 0.5% between steps. Spell-miss detection checks whether Arrows or Snowball caused a tower HP drop or troop count drop; if neither, fires the `spell_missed` penalty. Episode terminates when all 3 towers on either side reach 0, or when `force_done()` is called by the banner handler.
