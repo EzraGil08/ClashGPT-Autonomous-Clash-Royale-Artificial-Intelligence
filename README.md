@@ -41,9 +41,9 @@ The system operates in two modes:
 
 | Document | Description |
 |----------|-------------|
-| [Report](Presentation%20Materials/Report.pdf) | Full technical write-up |
-| [Poster](Presentation%20Materials/Poster.pdf) | Research poster |
-| [Presentation](Presentation%20Materials/Presentation.pdf) | Slide deck |
+| [Report](Report.pdf) | Full technical write-up |
+| [Poster](Poster.pdf) | Research poster |
+| [Presentation](Presentation.pdf) | Slide deck |
 
 ---
 
@@ -98,10 +98,9 @@ Senior Research Project/
 │   ├── tower_health.py     # Pixel-scan HP reader for all 6 towers
 │   └── train.py            # MaskablePPO training script
 │
-├── Presentation Materials/
-│   ├── Poster.pdf
-│   ├── Report.pdf
-│   └── Presentation.pdf
+├── Poster.pdf
+├── Report.pdf
+├── Presentation.pdf
 │
 ├── Images/             # Reference images used by CV modules (on Drive)
 │   ├── cards_in_hand/  # 9 card template PNGs for get_hand()
